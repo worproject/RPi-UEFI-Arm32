@@ -26,7 +26,7 @@
 #define MAILBOX_MAX_POLL   0x000F0000
 
 // VC Mailbox register
-#define MAILBOX_BASE       0x3F00B880       // Base address of mailbox register set
+#define MAILBOX_BASE       0xFE00B880       // Base address of mailbox register set
 
 #define MAILBOX_READ_REG   (MAILBOX_BASE + 0x00)
 #define MAILBOX_POLL_REG   (MAILBOX_BASE + 0x10)

@@ -354,7 +354,7 @@
   #
   gArmPlatformTokenSpaceGuid.PL011UartClkInHz|16000000 # 16MHz this must match config.txt default is 3MHz
 
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0x3F201000 # NOTE: Datasheet errata!
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0xFE201000 # NOTE: Datasheet errata!
 
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate|921600
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultDataBits|8

@@ -16,7 +16,7 @@
 #define __BCM2836SDIO_H__
 
 //MMC/SD/SDIO1 register definitions.
-#define MMCHS1BASE        0x3F300000
+#define MMCHS1BASE        0xFE300000
 #define MMC_REFERENCE_CLK (96000000)
 
 #define MMCHS_BLK         (MMCHS1BASE + 0x4)

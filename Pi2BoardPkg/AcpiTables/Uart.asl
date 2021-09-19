@@ -18,7 +18,7 @@ Device (URT0)
     }
     Method (_CRS, 0x0, NotSerialized) {
         Name (RBUF, ResourceTemplate () {
-            MEMORY32FIXED(ReadWrite, 0x3F201000, 0x1000, )
+            MEMORY32FIXED(ReadWrite, 0xFE201000, 0x1000, )
             Interrupt(ResourceConsumer, Level, ActiveHigh, Exclusive) { 0x59 }
             // NTRAID#MSFT-7141401-2016/04/7-jordanrh - disable UART muxing
             // until a proper solution can be created for the dmap conflict.
@@ -80,7 +80,7 @@ Device (URTM)
     }
     Method (_CRS, 0x0, NotSerialized) {
         Name (RBUF, ResourceTemplate () {
-            MEMORY32FIXED(ReadWrite, 0x3F215000, 0x70, )
+            MEMORY32FIXED(ReadWrite, 0xFE215000, 0x70, )
             Interrupt(ResourceConsumer, Level, ActiveHigh, Shared) {0x3D}
         })
         Return(RBUF)

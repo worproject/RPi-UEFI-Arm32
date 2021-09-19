@@ -15,7 +15,7 @@
 #ifndef __BCM2836PRCM_H__
 #define __BCM2836PRCM_H__
 
-#define PRCM_BASE_ADDRESS  (0x3F100000)
+#define PRCM_BASE_ADDRESS  (0xFE100000)
 
 #define PRCM_RSTC_OFF  (0x1c)
 #define PRCM_RSTS_OFF  (0x20)

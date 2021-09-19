@@ -15,7 +15,7 @@
 #ifndef __BCM2836UART_H__
 #define __BCM2836UART_H__
 
-#define AUX_BASE_ADDRESS  (0x3F215000)
+#define AUX_BASE_ADDRESS  (0xFE215000)
 
 #define AUX_AUXENB        (AUX_BASE_ADDRESS + 0x04)
 

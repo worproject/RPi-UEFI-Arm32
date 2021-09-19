@@ -26,7 +26,7 @@
 // Main system DRAM as defined by the PCD definitions of system memory.
 
 // Peripheral register block
-#define SOC_REGISTERS_PHYSICAL_BASE       0x3F000000
+#define SOC_REGISTERS_PHYSICAL_BASE       0xFE000000
 #define SOC_REGISTERS_PHYSICAL_LENGTH     0x01000000
 #define SOC_REGISTERS_ATTRIBUTES          ARM_MEMORY_REGION_ATTRIBUTE_DEVICE
 

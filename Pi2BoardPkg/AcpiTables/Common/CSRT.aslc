@@ -136,9 +136,9 @@ EFI_ACPI_5_0_CSRT_TABLE Csrt =
             {
                 sizeof(DMA_CONTROLLER_VENDOR_DATA),            // controller vendor data here
                 1,
-                0x3F007000,                // Base address for channels
+                0xFE007000,                // Base address for channels
                 RPI2_DMA_CHANNEL_COUNT*0x100, // Base size = Number of channels x 0x100 size for each channel
-                0x3F007FE0,                // Base address for controller
+                0xFE007FE0,                // Base address for controller
                 8,                         // Base size = two registers
                 RPI2_DMA_USED_CHANNEL_COUNT,
                 0,                    // cannot use controller interrupt
