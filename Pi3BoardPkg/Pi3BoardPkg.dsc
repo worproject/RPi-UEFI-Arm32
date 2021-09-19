@@ -352,11 +352,11 @@
   #
   # ARM PL011 UART 0 settings to be used when it's included as the default serial port.
   #
-  gArmPlatformTokenSpaceGuid.PL011UartClkInHz|16000000 # 16MHz this must match config.txt default is 3MHz
+  gArmPlatformTokenSpaceGuid.PL011UartClkInHz|48000000 # 48MHz this must match config.txt default is 3MHz
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0xFE201000 # NOTE: Datasheet errata!
 
-  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate|921600
+  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate|115200
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultDataBits|8
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultParity|1   # NoParity
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultStopBits|1 # OneStopBit
