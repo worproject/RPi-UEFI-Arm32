@@ -22,6 +22,7 @@
 #define PI3_UEFI_BASE 0x108000
 #define MIDR_PARTNUM_CORTEX_A7 0xC07
 #define MIDR_PARTNUM_CORTEX_A53 0xD03
+#define MIDR_PARTNUM_CORTEX_A72 0xD08
 
 _start:
   mrc p15, 0, r0, c0, c0, 0         // Read MIDR
@@ -31,7 +32,7 @@ _start:
   cmp r0, r1
   moveq r4, #PI2_UEFI_BASE          // Jump to Pi2 UEFI
 
-  ldr r1, =MIDR_PARTNUM_CORTEX_A53
+  ldr r1, =MIDR_PARTNUM_CORTEX_A72
   cmp r0, r1
   moveq r4, #PI3_UEFI_BASE          // Jump to Pi3 UEFI
 
