@@ -79,6 +79,12 @@ typedef struct
 // Standard ACPI Header
     EFI_ACPI_DESCRIPTION_HEADER CsrtHeader;
 
+// Timer resource group (GIT for M2-M3)
+    EFI_ACPI_5_0_CSRT_RESOURCE_GROUP_HEADER TimerResourceGroup;
+
+// Interrupt controller resource group
+    EFI_ACPI_5_0_CSRT_RESOURCE_GROUP_HEADER InterruptControllerResourceGroup;
+
 // DMA Resource Group
     RG_DMA DmaResourceGroup;
 
@@ -93,7 +99,7 @@ EFI_ACPI_5_0_CSRT_TABLE Csrt =
     //------------------------------------------------------------------------
     {
         EFI_ACPI_5_0_CORE_SYSTEM_RESOURCE_TABLE_SIGNATURE,    // Signature "CSRT"
-        sizeof(EFI_ACPI_DESCRIPTION_HEADER) + sizeof(RG_DMA), // was sizeof(EFI_ACPI_5_0_CSRT_TABLE),    // Length
+        sizeof(EFI_ACPI_DESCRIPTION_HEADER) + sizeof(EFI_ACPI_5_0_CSRT_RESOURCE_GROUP_HEADER) + sizeof(EFI_ACPI_5_0_CSRT_RESOURCE_GROUP_HEADER) + sizeof(RG_DMA), // was sizeof(EFI_ACPI_5_0_CSRT_TABLE),    // Length
         EFI_ACPI_5_0_CSRT_REVISION,         // Revision
         0x00,                           // Checksum calculated at runtime.
         EFI_ACPI_OEM_ID,                // OEMID is a 6 bytes long field "BC2836"
@@ -101,6 +107,34 @@ EFI_ACPI_5_0_CSRT_TABLE Csrt =
         EFI_ACPI_OEM_REVISION,          // OEM revision number.
         EFI_ACPI_CREATOR_ID,            // ASL compiler vendor ID.
         EFI_ACPI_CREATOR_REVISION       // ASL compiler revision number.
+    },
+
+    //------------------------------------------------------------------------
+    // Timer Resource Group (GIT for M2-M3) -- halextgit.dll
+    //------------------------------------------------------------------------
+    {
+            sizeof(EFI_ACPI_5_0_CSRT_RESOURCE_GROUP_HEADER), // Resource Group Length
+            SIGNATURE_32('A','R','M','.'),                   // VendorId
+            0,                              // SubvendorId
+            1,                              // DeviceId 1
+            0,                              // SubdeviceId
+            0,                              // Revision
+            0,                              // Reserved
+            0                            // SharedInfoLength
+    },
+
+    //------------------------------------------------------------------------
+    // Interrupt Controller Resource Group - halextbcm2709.dll
+    //------------------------------------------------------------------------
+    {
+            sizeof(EFI_ACPI_5_0_CSRT_RESOURCE_GROUP_HEADER), // Resource Group Length
+            SIGNATURE_32('B','R','C','M'),                   // VendorId
+            0,                              // SubvendorId
+            0x2709,                         // DeviceId 0x2709
+            0,                              // SubdeviceId
+            0,                              // Revision
+            0,                              // Reserved
+            0                            // SharedInfoLength
     },
 
     //------------------------------------------------------------------------

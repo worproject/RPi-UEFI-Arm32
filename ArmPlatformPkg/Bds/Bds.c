@@ -701,61 +701,64 @@ DefineDefaultBootAppBootEntries (
 {
     EFI_STATUS          Status;
     UINTN               Index = 0;
-    CHAR16              *UnicodeBootAppPath = NULL;
-    CHAR8               *AsciiBootAppPath;
+    UINTN               PathIndex = 1;
+    UINTN               PathIterator;
+    CHAR16              *UnicodeBootAppPath[2] =  { NULL, L"\\EFI\\BOOT\\BOOTARM.EFI" };
+    CHAR8               *AsciiBootAppPath[2] = { NULL, "\\EFI\\BOOT\\BOOTARM.EFI" };
     EFI_DEVICE_PATH     *FullPath = NULL;
     BDS_LOAD_OPTION     *BdsLoadOption = NULL;
 
-    AsciiBootAppPath = (CHAR8*)PcdGetPtr (PcdDefaultBootAppPath);
-    if (AsciiBootAppPath == NULL) {
-        return EFI_UNSUPPORTED;
-    }
-
-    Status = ConvertAllocAsciiStrToUnicodeStr (
-        AsciiBootAppPath,
-        &UnicodeBootAppPath);
-    if (EFI_ERROR (Status)) {
-        DEBUG ((EFI_D_ERROR, "FAIL to cconvert boot app path to unicode format\n"));
-        goto Exit;
+    AsciiBootAppPath[0] = (CHAR8*)PcdGetPtr (PcdDefaultBootAppPath);
+    if (AsciiBootAppPath[0] == NULL || !AsciiStriCmp(AsciiBootAppPath[0], AsciiBootAppPath[1])) {
+        PathIndex = 1;
+    } else {
+        Status = ConvertAllocAsciiStrToUnicodeStr (
+            AsciiBootAppPath[0],
+            &UnicodeBootAppPath[0]);
+        if (EFI_ERROR (Status)) {
+            DEBUG ((EFI_D_ERROR, "FAIL to cconvert boot app path to unicode format\n"));
+            PathIndex = 1;
+        }
     }
 
     // Attempt to create boot option if the boot app if found. Will add multiple
     // option if the boot app is found in multiple file system.
-    do {
-        Status = FindFileFullDevicePath (
-            &Index,
-            AsciiBootAppPath,
-            UnicodeBootAppPath,
-            &FullPath
-            );
-        if (Status == EFI_SUCCESS) {
-            Status = BootOptionCreate (LOAD_OPTION_ACTIVE | LOAD_OPTION_CATEGORY_BOOT,
-                                       L"Default EFI Boot Application",
-                                       FullPath,
-                                       BDS_LOADER_EFI_APPLICATION,
-                                       NULL,
-                                       0,
-                                       &BdsLoadOption
-                                       );
-            if (EFI_ERROR (Status)) {
-                DEBUG ((EFI_D_ERROR, "Fail to create boot option for %s\n", AsciiBootAppPath));
-            } else {
-                DEBUG ((DEBUG_INIT, "Created boot option for %s\n", AsciiBootAppPath));
+    for (PathIterator = PathIndex; PathIterator < 2; PathIterator++) {
+        do {
+            Status = FindFileFullDevicePath (
+                &Index,
+                AsciiBootAppPath[PathIterator],
+                UnicodeBootAppPath[PathIterator],
+                &FullPath
+                );
+            if (Status == EFI_SUCCESS) {
+                Status = BootOptionCreate (LOAD_OPTION_ACTIVE | LOAD_OPTION_CATEGORY_BOOT,
+                                           L"Default EFI Boot Application",
+                                           FullPath,
+                                           BDS_LOADER_EFI_APPLICATION,
+                                           NULL,
+                                           0,
+                                           &BdsLoadOption
+                                           );
+                if (EFI_ERROR (Status)) {
+                    DEBUG ((EFI_D_ERROR, "Fail to create boot option for %s\n", AsciiBootAppPath));
+                } else {
+                    DEBUG ((DEBUG_INIT, "Created boot option for %s\n", AsciiBootAppPath));
+                }
+                if (BdsLoadOption) {
+                    FreePool (BdsLoadOption);
+                    BdsLoadOption = NULL;
+                }
+                if (FullPath) {
+                    FreePool (FullPath);
+                   FullPath = NULL;
+                }
             }
-            if (BdsLoadOption) {
-                FreePool (BdsLoadOption);
-                BdsLoadOption = NULL;
-            }
-            if (FullPath) {
-                FreePool (FullPath);
-                FullPath = NULL;
-            }
-        }
-    } while (Status != EFI_NOT_FOUND);
+        } while (Status != EFI_NOT_FOUND);
+    }
 
-Exit:
-    if (UnicodeBootAppPath) {
-        FreePool (UnicodeBootAppPath);
+    if (UnicodeBootAppPath[0]) {
+        FreePool (UnicodeBootAppPath[0]);
     }
     return Status;
 }
